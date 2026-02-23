@@ -11,7 +11,7 @@
   <!-- Font Awesome 6 (free) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ----- СБРОС И ПЕРЕМЕННЫЕ (новая пастельная палитра) ----- */
+    /* ----- СБРОС И ПЕРЕМЕННЫЕ (мягкая пастельная палитра) ----- */
     * {
       margin: 0;
       padding: 0;
@@ -19,17 +19,16 @@
     }
 
     :root {
-      --bg-gradient: linear-gradient(145deg, #f8f2f0 0%, #f0ebe9 100%);
+      --bg-gradient: linear-gradient(145deg, #f7f2ef 0%, #efe8e4 100%);
       --card-bg: rgba(255, 255, 255, 0.7);
       --card-blur: blur(12px);
-      --border-light: 1px solid rgba(210, 190, 180, 0.25);
-      --shadow-soft: 0 20px 35px -10px rgba(90, 70, 60, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
-      --shadow-hover: 0 25px 40px -12px rgba(70, 50, 40, 0.2), 0 0 0 1px rgba(255, 245, 240, 0.9) inset;
+      --border-light: 1px solid rgba(200, 180, 170, 0.25);
+      --shadow-soft: 0 20px 35px -10px rgba(90, 70, 55, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+      --shadow-hover: 0 25px 40px -12px rgba(70, 50, 35, 0.2), 0 0 0 1px rgba(255, 245, 235, 0.9) inset;
       --text-primary: #3d3a36;
       --text-secondary: #706b64;
       --accent-light: #dcc9c0;
       --accent-muted: #c7b2a8;
-      --accent-soft: #e1cfc7;
       --accent-emerald: #b1cfc3;
       --accent-blush: #f1d5ce;
       --color-low: #c7e0c7;
@@ -37,7 +36,7 @@
       --color-high: #f6cfcf;
       --radius-card: 36px;
       --radius-small: 30px;
-      --transition: all 0.25s ease;
+      --transition: all 0.2s ease;
     }
 
     body {
@@ -56,7 +55,7 @@
       margin: 0 auto;
     }
 
-    /* ----- ШАПКА (СТЕКЛЯННАЯ) ----- */
+    /* ----- ШАПКА ----- */
     .header {
       display: flex;
       flex-wrap: wrap;
@@ -67,34 +66,34 @@
       -webkit-backdrop-filter: var(--card-blur);
       border: var(--border-light);
       border-radius: 80px;
-      padding: 14px 20px 14px 28px;
-      margin-bottom: 40px;
+      padding: 12px 18px 12px 24px;
+      margin-bottom: 36px;
       box-shadow: var(--shadow-soft);
     }
 
     .profile {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 60px;
+      width: 56px;
+      height: 56px;
+      border-radius: 56px;
       background: var(--accent-emerald);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       color: #4c5b55;
-      box-shadow: 0 6px 12px rgba(130, 140, 120, 0.2);
+      box-shadow: 0 6px 12px rgba(130, 140, 120, 0.15);
       border: 2px solid white;
     }
 
     .name h1 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       line-height: 1.2;
@@ -102,7 +101,7 @@
     }
 
     .name p {
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: var(--text-secondary);
       font-weight: 400;
       margin-top: 4px;
@@ -110,11 +109,11 @@
 
     .stats-mini {
       display: flex;
-      gap: 28px;
+      gap: 20px;
       background: rgba(255, 255, 255, 0.4);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      padding: 12px 32px;
+      padding: 10px 28px;
       border-radius: 80px;
       border: var(--border-light);
     }
@@ -125,12 +124,12 @@
 
     .stat-mini-value {
       font-weight: 700;
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       color: #43554e;
     }
 
     .stat-mini-label {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.03em;
       color: #6d7a74;
@@ -140,10 +139,9 @@
     .grid-main {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 32px;
+      gap: 28px;
     }
 
-    /* колонки */
     .column {
       background: transparent;
     }
@@ -153,16 +151,16 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
-      padding-left: 12px;
+      margin-bottom: 18px;
+      padding-left: 8px;
     }
 
     .column-header h2 {
-      font-size: 1.7rem;
+      font-size: 1.6rem;
       font-weight: 500;
       background: rgba(220, 201, 192, 0.3);
       backdrop-filter: blur(4px);
-      padding: 8px 24px;
+      padding: 6px 20px;
       border-radius: 60px;
       border: 1px solid rgba(255, 250, 245, 0.6);
       color: #45423e;
@@ -171,7 +169,7 @@
     /* сортировка (иконки) */
     .sort-icons {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
@@ -179,15 +177,15 @@
       background: rgba(255, 255, 255, 0.6);
       backdrop-filter: blur(6px);
       border: none;
-      width: 48px;
-      height: 48px;
-      border-radius: 60px;
-      font-size: 1.3rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 44px;
+      font-size: 1.2rem;
       color: var(--text-secondary);
       cursor: pointer;
       transition: var(--transition);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.02);
-      border: 1px solid rgba(210, 190, 180, 0.3);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      border: 1px solid rgba(200, 180, 170, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -208,7 +206,7 @@
     .card-list {
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 20px;
     }
 
     .order-card {
@@ -217,7 +215,7 @@
       -webkit-backdrop-filter: var(--card-blur);
       border: var(--border-light);
       border-radius: var(--radius-card);
-      padding: 24px 26px;
+      padding: 22px 24px;
       box-shadow: var(--shadow-soft);
       transition: var(--transition);
     }
@@ -231,20 +229,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .card-title {
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       color: #2f3a35;
     }
 
     .card-badge {
       background: #e7dbd2;
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 60px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 500;
       color: #4f4a44;
       font-family: monospace;
@@ -255,34 +253,34 @@
     .card-details {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px 18px;
-      margin: 18px 0 12px;
+      gap: 12px 16px;
+      margin: 16px 0 10px;
     }
 
     .chip {
       background: rgba(230, 220, 215, 0.7);
       backdrop-filter: blur(4px);
-      padding: 8px 18px;
+      padding: 6px 16px;
       border-radius: 60px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       color: var(--text-primary);
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
     .chip i {
       color: #827871;
-      font-size: 1rem;
-      width: 18px;
+      font-size: 0.95rem;
+      width: 16px;
     }
 
     .complexity {
-      padding: 6px 20px;
+      padding: 5px 16px;
       border-radius: 60px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .complexity.low { background: var(--color-low); color: #2e6044; }
@@ -292,37 +290,40 @@
     .price {
       font-weight: 700;
       color: #3e5d52;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     .commission {
       background: #dacfc7;
-      padding: 4px 14px;
+      padding: 4px 12px;
       border-radius: 30px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 18px;
+      margin-top: 16px;
       border-top: 1px dashed #dacbc2;
-      padding-top: 18px;
+      padding-top: 16px;
     }
 
     .btn-complete {
       background: var(--accent-emerald);
       border: none;
-      padding: 12px 28px;
+      padding: 10px 24px;
       border-radius: 60px;
       font-weight: 600;
       color: #32523f;
       cursor: pointer;
       transition: var(--transition);
-      font-size: 1rem;
-      box-shadow: 0 6px 12px rgba(130, 160, 140, 0.2);
+      font-size: 0.95rem;
+      box-shadow: 0 6px 12px rgba(130, 160, 140, 0.15);
       border: 1px solid #c3e0d0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn-complete:hover {
@@ -332,27 +333,30 @@
 
     .completed-label {
       background: #e4dbd1;
-      padding: 8px 28px;
+      padding: 7px 24px;
       border-radius: 60px;
       color: #625a52;
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* ----- АДМИН-ПАНЕЛЬ (геар) ----- */
+    /* ----- АДМИН-ГЕАР ----- */
     .admin-gear {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 64px;
-      height: 64px;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
       background: #ffffffcc;
       backdrop-filter: blur(10px);
-      border-radius: 64px;
+      border-radius: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 1.9rem;
       color: #5c615a;
       box-shadow: var(--shadow-hover);
       cursor: pointer;
@@ -366,7 +370,7 @@
       background: #ffffff;
     }
 
-    /* ----- МОДАЛЬНОЕ ОКНО (АДМИНКА) ----- */
+    /* ----- МОДАЛЬНОЕ ОКНО ----- */
     .modal {
       display: none;
       position: fixed;
@@ -377,7 +381,7 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      padding: 16px;
+      padding: 12px;
     }
 
     .modal-card {
@@ -386,8 +390,8 @@
       width: 100%;
       max-width: 1300px;
       max-height: 90vh;
-      border-radius: 60px;
-      padding: 28px 32px;
+      border-radius: 48px;
+      padding: 24px 28px;
       box-shadow: 0 30px 60px rgba(40, 30, 20, 0.3);
       border: 1px solid #f0e4db;
       display: flex;
@@ -398,11 +402,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .modal-header h2 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 500;
       color: #3b3f3a;
     }
@@ -410,16 +414,16 @@
     .close-modal {
       background: none;
       border: none;
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       cursor: pointer;
       color: #9e9189;
       transition: transform 0.2s;
-      width: 60px;
-      height: 60px;
+      width: 56px;
+      height: 56px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 60px;
+      border-radius: 56px;
     }
 
     .close-modal:hover {
@@ -427,24 +431,24 @@
       color: #4c443e;
     }
 
-    /* панель инструментов админки */
+    /* панель инструментов админки (адаптивная) */
     .admin-toolbar {
       display: flex;
-      gap: 18px;
+      gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
     }
 
     .admin-btn {
       background: #e2dad2;
       border: none;
-      padding: 14px 30px;
+      padding: 12px 22px;
       border-radius: 60px;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.95rem;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       cursor: pointer;
       transition: var(--transition);
       color: #3f3f3a;
@@ -452,7 +456,7 @@
     }
 
     .admin-btn i {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .admin-btn.primary {
@@ -465,27 +469,27 @@
 
     .admin-btn:hover {
       background: #d5c8be;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
     /* адаптивная таблица */
     .table-wrapper {
       overflow-x: auto;
-      border-radius: 40px;
+      border-radius: 36px;
       background: rgba(245, 235, 225, 0.4);
-      padding: 4px;
+      padding: 2px;
     }
 
     .admin-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.95rem;
-      min-width: 900px;
+      font-size: 0.9rem;
+      min-width: 800px;
     }
 
     .admin-table th {
       text-align: left;
-      padding: 22px 16px;
+      padding: 18px 14px;
       background: #ddd0c6cc;
       color: #46423b;
       font-weight: 600;
@@ -493,7 +497,7 @@
     }
 
     .admin-table td {
-      padding: 18px 16px;
+      padding: 16px 14px;
       border-bottom: 1px solid #ebdad0;
     }
 
@@ -502,26 +506,27 @@
     }
 
     .status-checkbox {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       accent-color: #b1cfc3;
       cursor: pointer;
     }
 
     .action-cell {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
     .action-icon {
       background: none;
       border: none;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       cursor: pointer;
-      padding: 8px;
+      padding: 6px;
       border-radius: 40px;
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -532,37 +537,37 @@
       background: #dacfc7;
     }
 
-    /* форма в админке (стеклянная) */
+    /* форма в админке */
     .admin-form {
       background: #f3ede7cc;
       backdrop-filter: blur(8px);
-      border-radius: 60px;
-      padding: 40px;
+      border-radius: 48px;
+      padding: 32px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
       border: 1px solid #f5e3d6;
-      margin-top: 20px;
+      margin-top: 16px;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .form-group label {
       font-weight: 600;
       color: #5b554d;
-      padding-left: 12px;
+      padding-left: 8px;
     }
 
     .form-group input, .form-group select {
       background: #fffcf9;
       border: 1px solid #e3d5cb;
       border-radius: 60px;
-      padding: 16px 22px;
-      font-size: 1rem;
+      padding: 14px 20px;
+      font-size: 0.95rem;
       outline: none;
       transition: 0.2s;
     }
@@ -575,47 +580,47 @@
     .form-checkbox {
       flex-direction: row;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
     }
 
     .form-actions {
       grid-column: 1 / -1;
       display: flex;
-      gap: 20px;
+      gap: 18px;
       justify-content: flex-end;
-      margin-top: 20px;
+      margin-top: 16px;
     }
 
     .btn-save {
       background: #aac3b7;
       border: none;
-      padding: 16px 48px;
+      padding: 14px 42px;
       border-radius: 60px;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
       cursor: pointer;
     }
 
     .btn-cancel {
       background: #dacfc7;
       border: none;
-      padding: 16px 48px;
+      padding: 14px 42px;
       border-radius: 60px;
       font-weight: 500;
       cursor: pointer;
     }
 
-    /* toast уведомления */
+    /* тост-уведомление */
     .toast {
       visibility: hidden;
-      min-width: 260px;
+      min-width: 240px;
       background-color: #43453f;
       color: #fcf3ea;
       text-align: center;
       border-radius: 60px;
-      padding: 16px 28px;
+      padding: 14px 24px;
       position: fixed;
-      bottom: 100px;
+      bottom: 90px;
       left: 50%;
       transform: translateX(-50%);
       font-weight: 500;
@@ -632,71 +637,142 @@
       opacity: 1;
     }
 
-    /* мобильная адаптация */
+    /* ----- УЛУЧШЕННАЯ МОБИЛЬНАЯ АДАПТАЦИЯ ----- */
     @media (max-width: 700px) {
       .grid-main {
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 36px;
       }
+
       .header {
         flex-direction: column;
         align-items: stretch;
-        gap: 20px;
+        gap: 16px;
         border-radius: 50px;
+        padding: 16px;
       }
+
       .profile {
         justify-content: center;
       }
+
+      .avatar {
+        width: 52px;
+        height: 52px;
+        font-size: 1.5rem;
+      }
+
+      .name h1 {
+        font-size: 1.4rem;
+      }
+
       .stats-mini {
         justify-content: space-around;
+        padding: 8px 16px;
       }
+
+      .stat-mini-value {
+        font-size: 1.3rem;
+      }
+
+      .stat-mini-label {
+        font-size: 0.7rem;
+      }
+
       .column-header h2 {
         font-size: 1.4rem;
-        padding: 6px 16px;
+        padding: 5px 16px;
       }
+
       .sort-btn {
-        width: 44px;
-        height: 44px;
-        font-size: 1.2rem;
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
       }
+
       .order-card {
-        padding: 20px;
+        padding: 18px 20px;
       }
+
       .card-title {
         font-size: 1.2rem;
       }
+
+      .card-badge {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+      }
+
+      .chip {
+        padding: 5px 12px;
+        font-size: 0.85rem;
+      }
+
+      .btn-complete {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+      }
+
+      .completed-label {
+        padding: 6px 18px;
+        font-size: 0.85rem;
+      }
+
       .admin-gear {
         width: 56px;
         height: 56px;
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         bottom: 20px;
         right: 20px;
       }
+
       .modal-card {
-        padding: 20px;
+        padding: 18px 16px;
       }
+
       .admin-form {
-        padding: 24px;
-        gap: 20px;
+        padding: 20px;
+        gap: 16px;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .btn-save, .btn-cancel {
+        width: 100%;
+        text-align: center;
       }
     }
 
     @media (max-width: 480px) {
       .card-details {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
       }
+
       .chip {
         width: 100%;
       }
+
       .card-footer {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
         align-items: stretch;
       }
-      .btn-complete {
+
+      .btn-complete, .completed-label {
         width: 100%;
-        text-align: center;
+        justify-content: center;
+      }
+
+      .admin-toolbar {
+        justify-content: center;
+      }
+
+      .admin-btn {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -729,8 +805,8 @@
     <!-- текущие -->
     <section class="column">
       <div class="column-header">
-        <h2><i class="fas fa-tasks" style="margin-right: 12px;"></i>Текущие</h2>
-        <div class="sort-icons"></div> <!-- пустой, для симметрии -->
+        <h2><i class="fas fa-tasks" style="margin-right: 10px;"></i>Текущие</h2>
+        <div class="sort-icons"></div> <!-- пусто для симметрии -->
       </div>
       <div id="todoList" class="card-list"></div>
     </section>
@@ -738,7 +814,7 @@
     <!-- выполненные + сортировка -->
     <section class="column">
       <div class="column-header">
-        <h2><i class="fas fa-check-circle" style="margin-right: 12px;"></i>Выполнено</h2>
+        <h2><i class="fas fa-check-circle" style="margin-right: 10px;"></i>Выполнено</h2>
         <div class="sort-icons" id="completedSortBar">
           <button class="sort-btn" data-sort="deadline" title="по дате"><i class="fas fa-calendar-alt"></i></button>
           <button class="sort-btn" data-sort="price" title="по цене"><i class="fas fa-coins"></i></button>
@@ -761,15 +837,15 @@
 <div id="adminModal" class="modal">
   <div class="modal-card">
     <div class="modal-header">
-      <h2><i class="fas fa-shield-alt" style="margin-right: 16px;"></i>Админ-панель</h2>
+      <h2><i class="fas fa-shield-alt" style="margin-right: 14px;"></i>Админ-панель</h2>
       <button class="close-modal" id="closeModal"><i class="fas fa-times"></i></button>
     </div>
     <div class="admin-toolbar">
       <button class="admin-btn primary" id="addOrderBtn"><i class="fas fa-plus-circle"></i> Новый заказ</button>
-      <button class="admin-btn" id="exportJsonBtn"><i class="fas fa-download"></i> Экспорт JSON</button>
-      <button class="admin-btn" id="exportCsvBtn"><i class="fas fa-file-csv"></i> Экспорт CSV</button>
+      <button class="admin-btn" id="exportJsonBtn"><i class="fas fa-download"></i> JSON</button>
+      <button class="admin-btn" id="exportCsvBtn"><i class="fas fa-file-csv"></i> CSV</button>
       <button class="admin-btn warning" id="importJsonBtn"><i class="fas fa-upload"></i> Импорт JSON</button>
-      <button class="admin-btn" id="resetDemoBtn"><i class="fas fa-rotate-left"></i> Демо-данные</button>
+      <button class="admin-btn" id="resetDemoBtn"><i class="fas fa-rotate-left"></i> Демо</button>
     </div>
     <!-- контейнер для таблицы или формы -->
     <div id="adminContent" style="flex:1; overflow-y: auto;"></div>
@@ -779,13 +855,13 @@
 <script>
   (function() {
     // ----- КОНСТАНТЫ И СОСТОЯНИЕ -----
-    const STORAGE_KEY = 'freelance_dashboard_v2';
+    const STORAGE_KEY = 'freelance_dashboard_v3'; // новый ключ, чтобы избежать конфликтов
     const ADMIN_PASSWORD = '123';
     const ID_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ123456789'; // без 0, O, I
 
     let orders = [];
     let sortField = 'deadline';
-    let sortDir = 'desc'; // desc = новые сверху
+    let sortDir = 'desc'; // новые сверху
 
     // для админки
     let adminEditId = null;
@@ -910,22 +986,43 @@
       updateStats();
     }
 
-    // ----- LOCALSTORAGE -----
+    // ----- LOCALSTORAGE (с проверкой на целостность) -----
     function saveToStorage() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+        showToast('Данные сохранены');
+      } catch (e) {
+        console.warn('Ошибка сохранения:', e);
+      }
     }
 
     function loadFromStorage() {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        try { orders = JSON.parse(stored); } catch { orders = []; }
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          // убедимся, что это массив и каждый объект имеет нужные поля (простая валидация)
+          if (Array.isArray(parsed)) {
+            orders = parsed;
+          } else {
+            orders = [];
+          }
+        } else {
+          orders = [];
+        }
+      } catch (e) {
+        console.warn('Ошибка загрузки из localStorage, используем демо-данные');
+        orders = [];
       }
+
+      // если orders пустой или не массив — грузим демо
       if (!orders.length) {
         orders = [
           { id: generateId(), title: 'Разработка лендинга', client: 'client1@mail.com', deadline: '2026-03-15', complexity: 'Средняя', price: 50000, commission: 80, completed: false },
           { id: generateId(), title: 'Вёрстка интернет-магазина', client: '@telegram_nick', deadline: '2026-04-01', complexity: 'Высокая', price: 120000, commission: 75, completed: false },
           { id: generateId(), title: 'Рефакторинг кода', client: 'ivan@example.com', deadline: '2026-02-10', complexity: 'Низкая', price: 20000, commission: 90, completed: true }
         ];
+        saveToStorage(); // сразу сохраняем демо в storage
       }
     }
 
@@ -952,7 +1049,7 @@
           sortDir = sortDir === 'asc' ? 'desc' : 'asc';
         } else {
           sortField = field;
-          sortDir = 'desc'; // при смене поля новые сверху
+          sortDir = 'desc'; // новые сверху
         }
         sortButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -979,12 +1076,13 @@
       let html = `<div class="table-wrapper"><table class="admin-table">
         <thead><tr><th>ID</th><th>Название</th><th>Клиент</th><th>Дедлайн</th><th>Сложность</th><th>Цена</th><th>%</th><th>Статус</th><th>Действия</th></tr></thead><tbody>`;
       orders.forEach(o => {
+        const complClass = o.complexity === 'Низкая' ? 'low' : (o.complexity === 'Средняя' ? 'medium' : 'high');
         html += `<tr>
           <td><code>${o.id}</code></td>
           <td>${o.title}</td>
           <td>${o.client}</td>
           <td>${formatDate(o.deadline)}</td>
-          <td><span class="complexity ${o.complexity === 'Низкая' ? 'low' : (o.complexity === 'Средняя' ? 'medium' : 'high')}">${o.complexity}</span></td>
+          <td><span class="complexity ${complClass}">${o.complexity}</span></td>
           <td>${formatPrice(o.price)}</td>
           <td>${o.commission}%</td>
           <td><input type="checkbox" class="status-checkbox" data-id="${o.id}" ${o.completed ? 'checked' : ''}></td>
@@ -1006,6 +1104,7 @@
             order.completed = e.target.checked;
             saveToStorage();
             renderAll();
+            showToast('Статус обновлён');
           }
         });
       });
@@ -1111,7 +1210,7 @@
         o.id, o.title, o.client, o.deadline, o.complexity, o.price, o.commission, o.completed ? 'Выполнен' : 'Текущий'
       ]);
       const csvContent = [headers.join(','), ...rows.map(r => r.map(c => `"${c}"`).join(','))].join('\n');
-      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' }); // BOM для русских букв
+      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -1141,9 +1240,8 @@
       reader.readAsText(file);
     }
 
-    // сброс к демо
     function resetToDemo() {
-      if (confirm('Вернуть демонстрационные данные? Все несохранённые изменения будут потеряны.')) {
+      if (confirm('Вернуть демонстрационные данные? Все изменения будут потеряны.')) {
         orders = [
           { id: generateId(), title: 'Разработка лендинга', client: 'client1@mail.com', deadline: '2026-03-15', complexity: 'Средняя', price: 50000, commission: 80, completed: false },
           { id: generateId(), title: 'Вёрстка интернет-магазина', client: '@telegram_nick', deadline: '2026-04-01', complexity: 'Высокая', price: 120000, commission: 75, completed: false },
@@ -1151,13 +1249,13 @@
         ];
         saveToStorage();
         renderAll();
-        renderAdminTable();
+        if (modal.style.display === 'flex') renderAdminTable();
         showToast('Демо-данные загружены');
       }
     }
 
     // ----- ИНИЦИАЛИЗАЦИЯ -----
-    loadFromStorage();
+    loadFromStorage();  // загружает и сохраняет демо при необходимости
     renderAll();
 
     // админка: запрос пароля
@@ -1173,30 +1271,7 @@
     closeModalBtn.addEventListener('click', closeModal);
     window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
-    // обработчики кнопок админки (после открытия модалки они динамические, используем делегирование через adminContent)
-    adminContent.addEventListener('click', e => {
-      if (e.target.closest('#addOrderBtn')) {
-        adminEditId = null;
-        showForm = true;
-        renderAdminForm();
-      } else if (e.target.closest('#exportJsonBtn')) {
-        exportJSON();
-      } else if (e.target.closest('#exportCsvBtn')) {
-        exportCSV();
-      } else if (e.target.closest('#importJsonBtn')) {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.json,application/json';
-        input.onchange = (ev) => {
-          if (ev.target.files[0]) importJSON(ev.target.files[0]);
-        };
-        input.click();
-      } else if (e.target.closest('#resetDemoBtn')) {
-        resetToDemo();
-      }
-    });
-
-    // но сами кнопки в тулбаре статичны, поэтому навесим обработчики отдельно
+    // обработчики кнопок админки (статические)
     document.getElementById('addOrderBtn').addEventListener('click', () => {
       adminEditId = null;
       showForm = true;
