@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Никита Разживин · Freelance Flow</title>
+  <!-- Google Fonts Inter + Fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- СБРОС И ПЕРЕМЕННЫЕ (новая пастельная палитра) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-gradient: linear-gradient(145deg, #f8f2f0 0%, #f0ebe9 100%);
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --card-blur: blur(12px);
+      --border-light: 1px solid rgba(210, 190, 180, 0.25);
+      --shadow-soft: 0 20px 35px -10px rgba(90, 70, 60, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      --shadow-hover: 0 25px 40px -12px rgba(70, 50, 40, 0.2), 0 0 0 1px rgba(255, 245, 240, 0.9) inset;
+      --text-primary: #3d3a36;
+      --text-secondary: #706b64;
+      --accent-light: #dcc9c0;
+      --accent-muted: #c7b2a8;
+      --accent-soft: #e1cfc7;
+      --accent-emerald: #b1cfc3;
+      --accent-blush: #f1d5ce;
+      --color-low: #c7e0c7;
+      --color-medium: #f5e2c1;
+      --color-high: #f6cfcf;
+      --radius-card: 36px;
+      --radius-small: 30px;
+      --transition: all 0.25s ease;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 20px 16px;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    /* ----- КОНТЕЙНЕР ----- */
+    .dashboard {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* ----- ШАПКА (СТЕКЛЯННАЯ) ----- */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      backdrop-filter: var(--card-blur);
+      -webkit-backdrop-filter: var(--card-blur);
+      border: var(--border-light);
+      border-radius: 80px;
+      padding: 14px 20px 14px 28px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 60px;
+      background: var(--accent-emerald);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.8rem;
+      color: #4c5b55;
+      box-shadow: 0 6px 12px rgba(130, 140, 120, 0.2);
+      border: 2px solid white;
+    }
+
+    .name h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #2d3732;
+    }
+
+    .name p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-top: 4px;
+    }
+
+    .stats-mini {
+      display: flex;
+      gap: 28px;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 12px 32px;
+      border-radius: 80px;
+      border: var(--border-light);
+    }
+
+    .stat-mini-item {
+      text-align: center;
+    }
+
+    .stat-mini-value {
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: #43554e;
+    }
+
+    .stat-mini-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #6d7a74;
+    }
+
+    /* ----- ОСНОВНАЯ СЕТКА (2 колонки) ----- */
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    /* колонки */
+    .column {
+      background: transparent;
+    }
+
+    .column-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-left: 12px;
+    }
+
+    .column-header h2 {
+      font-size: 1.7rem;
+      font-weight: 500;
+      background: rgba(220, 201, 192, 0.3);
+      backdrop-filter: blur(4px);
+      padding: 8px 24px;
+      border-radius: 60px;
+      border: 1px solid rgba(255, 250, 245, 0.6);
+      color: #45423e;
+    }
+
+    /* сортировка (иконки) */
+    .sort-icons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .sort-btn {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(6px);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 60px;
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.02);
+      border: 1px solid rgba(210, 190, 180, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sort-btn.active {
+      background: var(--accent-muted);
+      color: #51443e;
+      border-color: #b7a094;
+    }
+
+    .sort-btn:hover {
+      background: #f0e1d9;
+      transform: scale(1.05);
+    }
+
+    /* карточки (стекло) */
+    .card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .order-card {
+      background: var(--card-bg);
+      backdrop-filter: var(--card-blur);
+      -webkit-backdrop-filter: var(--card-blur);
+      border: var(--border-light);
+      border-radius: var(--radius-card);
+      padding: 24px 26px;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .order-card:hover {
+      box-shadow: var(--shadow-hover);
+      background: rgba(255, 250, 245, 0.75);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #2f3a35;
+    }
+
+    .card-badge {
+      background: #e7dbd2;
+      padding: 6px 16px;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #4f4a44;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+      border: 1px solid #fff6f0;
+    }
+
+    .card-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      margin: 18px 0 12px;
+    }
+
+    .chip {
+      background: rgba(230, 220, 215, 0.7);
+      backdrop-filter: blur(4px);
+      padding: 8px 18px;
+      border-radius: 60px;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-primary);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .chip i {
+      color: #827871;
+      font-size: 1rem;
+      width: 18px;
+    }
+
+    .complexity {
+      padding: 6px 20px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .complexity.low { background: var(--color-low); color: #2e6044; }
+    .complexity.medium { background: var(--color-medium); color: #8b6f42; }
+    .complexity.high { background: var(--color-high); color: #a15151; }
+
+    .price {
+      font-weight: 700;
+      color: #3e5d52;
+      font-size: 1.1rem;
+    }
+
+    .commission {
+      background: #dacfc7;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      border-top: 1px dashed #dacbc2;
+      padding-top: 18px;
+    }
+
+    .btn-complete {
+      background: var(--accent-emerald);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      color: #32523f;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 1rem;
+      box-shadow: 0 6px 12px rgba(130, 160, 140, 0.2);
+      border: 1px solid #c3e0d0;
+    }
+
+    .btn-complete:hover {
+      background: #a8cfbf;
+      transform: scale(1.02);
+    }
+
+    .completed-label {
+      background: #e4dbd1;
+      padding: 8px 28px;
+      border-radius: 60px;
+      color: #625a52;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    /* ----- АДМИН-ПАНЕЛЬ (геар) ----- */
+    .admin-gear {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 64px;
+      height: 64px;
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      border-radius: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #5c615a;
+      box-shadow: var(--shadow-hover);
+      cursor: pointer;
+      transition: transform 0.3s, background 0.2s;
+      border: 2px solid #fff3e9;
+      z-index: 99;
+    }
+
+    .admin-gear:hover {
+      transform: rotate(30deg) scale(1.1);
+      background: #ffffff;
+    }
+
+    /* ----- МОДАЛЬНОЕ ОКНО (АДМИНКА) ----- */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(70, 60, 55, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #fcf7f3ee;
+      backdrop-filter: blur(16px);
+      width: 100%;
+      max-width: 1300px;
+      max-height: 90vh;
+      border-radius: 60px;
+      padding: 28px 32px;
+      box-shadow: 0 30px 60px rgba(40, 30, 20, 0.3);
+      border: 1px solid #f0e4db;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .modal-header h2 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: #3b3f3a;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 2.8rem;
+      cursor: pointer;
+      color: #9e9189;
+      transition: transform 0.2s;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+    }
+
+    .close-modal:hover {
+      background: #ece0d8;
+      color: #4c443e;
+    }
+
+    /* панель инструментов админки */
+    .admin-toolbar {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .admin-btn {
+      background: #e2dad2;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      color: #3f3f3a;
+      border: 1px solid #fffbf5;
+    }
+
+    .admin-btn i {
+      font-size: 1.2rem;
+    }
+
+    .admin-btn.primary {
+      background: var(--accent-emerald);
+    }
+
+    .admin-btn.warning {
+      background: #f0cfc0;
+    }
+
+    .admin-btn:hover {
+      background: #d5c8be;
+      transform: translateY(-3px);
+    }
+
+    /* адаптивная таблица */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 40px;
+      background: rgba(245, 235, 225, 0.4);
+      padding: 4px;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      min-width: 900px;
+    }
+
+    .admin-table th {
+      text-align: left;
+      padding: 22px 16px;
+      background: #ddd0c6cc;
+      color: #46423b;
+      font-weight: 600;
+      backdrop-filter: blur(4px);
+    }
+
+    .admin-table td {
+      padding: 18px 16px;
+      border-bottom: 1px solid #ebdad0;
+    }
+
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-checkbox {
+      width: 22px;
+      height: 22px;
+      accent-color: #b1cfc3;
+      cursor: pointer;
+    }
+
+    .action-cell {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-icon {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 40px;
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #6a6259;
+    }
+
+    .action-icon:hover {
+      background: #dacfc7;
+    }
+
+    /* форма в админке (стеклянная) */
+    .admin-form {
+      background: #f3ede7cc;
+      backdrop-filter: blur(8px);
+      border-radius: 60px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+      border: 1px solid #f5e3d6;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: #5b554d;
+      padding-left: 12px;
+    }
+
+    .form-group input, .form-group select {
+      background: #fffcf9;
+      border: 1px solid #e3d5cb;
+      border-radius: 60px;
+      padding: 16px 22px;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: #b9a697;
+      box-shadow: 0 0 0 3px #f0ded3;
+    }
+
+    .form-checkbox {
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .form-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 20px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .btn-save {
+      background: #aac3b7;
+      border: none;
+      padding: 16px 48px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .btn-cancel {
+      background: #dacfc7;
+      border: none;
+      padding: 16px 48px;
+      border-radius: 60px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* toast уведомления */
+    .toast {
+      visibility: hidden;
+      min-width: 260px;
+      background-color: #43453f;
+      color: #fcf3ea;
+      text-align: center;
+      border-radius: 60px;
+      padding: 16px 28px;
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      border: 1px solid #ffefe3;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      z-index: 2000;
+      transition: visibility 0.2s, opacity 0.3s;
+      opacity: 0;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* мобильная адаптация */
+    @media (max-width: 700px) {
+      .grid-main {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+        border-radius: 50px;
+      }
+      .profile {
+        justify-content: center;
+      }
+      .stats-mini {
+        justify-content: space-around;
+      }
+      .column-header h2 {
+        font-size: 1.4rem;
+        padding: 6px 16px;
+      }
+      .sort-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+      }
+      .order-card {
+        padding: 20px;
+      }
+      .card-title {
+        font-size: 1.2rem;
+      }
+      .admin-gear {
+        width: 56px;
+        height: 56px;
+        font-size: 1.8rem;
+        bottom: 20px;
+        right: 20px;
+      }
+      .modal-card {
+        padding: 20px;
+      }
+      .admin-form {
+        padding: 24px;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-details {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .chip {
+        width: 100%;
+      }
+      .card-footer {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+      }
+      .btn-complete {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard">
+  <!-- шапка с аватаром и статистикой -->
+  <header class="header">
+    <div class="profile">
+      <div class="avatar">НР</div>
+      <div class="name">
+        <h1>Никита Разживин</h1>
+        <p><i class="far fa-smile"></i> Web Developer & Freelancer</p>
+      </div>
+    </div>
+    <div class="stats-mini" id="statsHeader">
+      <div class="stat-mini-item">
+        <div class="stat-mini-value" id="completedCount">0</div>
+        <div class="stat-mini-label">выполнено</div>
+      </div>
+      <div class="stat-mini-item">
+        <div class="stat-mini-value" id="totalEarned">0 ₽</div>
+        <div class="stat-mini-label">заработано</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- основной дашборд -->
+  <div class="grid-main">
+    <!-- текущие -->
+    <section class="column">
+      <div class="column-header">
+        <h2><i class="fas fa-tasks" style="margin-right: 12px;"></i>Текущие</h2>
+        <div class="sort-icons"></div> <!-- пустой, для симметрии -->
+      </div>
+      <div id="todoList" class="card-list"></div>
+    </section>
+
+    <!-- выполненные + сортировка -->
+    <section class="column">
+      <div class="column-header">
+        <h2><i class="fas fa-check-circle" style="margin-right: 12px;"></i>Выполнено</h2>
+        <div class="sort-icons" id="completedSortBar">
+          <button class="sort-btn" data-sort="deadline" title="по дате"><i class="fas fa-calendar-alt"></i></button>
+          <button class="sort-btn" data-sort="price" title="по цене"><i class="fas fa-coins"></i></button>
+          <button class="sort-btn" data-sort="complexity" title="по сложности"><i class="fas fa-chart-simple"></i></button>
+          <button class="sort-btn" data-sort="title" title="по названию"><i class="fas fa-font"></i></button>
+        </div>
+      </div>
+      <div id="completedList" class="card-list"></div>
+    </section>
+  </div>
+
+  <!-- админ-иконка -->
+  <div class="admin-gear" id="adminGear"><i class="fas fa-cog"></i></div>
+
+  <!-- тост-уведомление -->
+  <div id="toast" class="toast"></div>
+</div>
+
+<!-- модальное окно админки -->
+<div id="adminModal" class="modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2><i class="fas fa-shield-alt" style="margin-right: 16px;"></i>Админ-панель</h2>
+      <button class="close-modal" id="closeModal"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="admin-toolbar">
+      <button class="admin-btn primary" id="addOrderBtn"><i class="fas fa-plus-circle"></i> Новый заказ</button>
+      <button class="admin-btn" id="exportJsonBtn"><i class="fas fa-download"></i> Экспорт JSON</button>
+      <button class="admin-btn" id="exportCsvBtn"><i class="fas fa-file-csv"></i> Экспорт CSV</button>
+      <button class="admin-btn warning" id="importJsonBtn"><i class="fas fa-upload"></i> Импорт JSON</button>
+      <button class="admin-btn" id="resetDemoBtn"><i class="fas fa-rotate-left"></i> Демо-данные</button>
+    </div>
+    <!-- контейнер для таблицы или формы -->
+    <div id="adminContent" style="flex:1; overflow-y: auto;"></div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ----- КОНСТАНТЫ И СОСТОЯНИЕ -----
+    const STORAGE_KEY = 'freelance_dashboard_v2';
+    const ADMIN_PASSWORD = '123';
+    const ID_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ123456789'; // без 0, O, I
+
+    let orders = [];
+    let sortField = 'deadline';
+    let sortDir = 'desc'; // desc = новые сверху
+
+    // для админки
+    let adminEditId = null;
+    let showForm = false;
+
+    // DOM
+    const todoEl = document.getElementById('todoList');
+    const completedEl = document.getElementById('completedList');
+    const completedCountSpan = document.getElementById('completedCount');
+    const totalEarnedSpan = document.getElementById('totalEarned');
+    const sortButtons = document.querySelectorAll('#completedSortBar .sort-btn');
+    const adminGear = document.getElementById('adminGear');
+    const modal = document.getElementById('adminModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const adminContent = document.getElementById('adminContent');
+    const toastEl = document.getElementById('toast');
+
+    // ----- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ -----
+    function generateId() {
+      let id = '';
+      for (let i = 0; i < 7; i++) {
+        id += ID_CHARS[Math.floor(Math.random() * ID_CHARS.length)];
+      }
+      return id;
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '—';
+      const d = new Date(iso);
+      if (isNaN(d)) return '—';
+      return d.toLocaleDateString('ru', { day: 'numeric', month: 'short', year: 'numeric' }).replace('.', '');
+    }
+
+    function formatPrice(p) {
+      return new Intl.NumberFormat('ru-RU').format(p) + ' ₽';
+    }
+
+    function showToast(text, duration = 2500) {
+      toastEl.textContent = text;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), duration);
+    }
+
+    // обновление статистики
+    function updateStats() {
+      const completed = orders.filter(o => o.completed);
+      const count = completed.length;
+      const total = completed.reduce((acc, o) => acc + (o.price * o.commission / 100), 0);
+      completedCountSpan.textContent = count;
+      totalEarnedSpan.textContent = formatPrice(Math.round(total));
+    }
+
+    // сортировка выполненных
+    function getSortedCompleted() {
+      const completed = orders.filter(o => o.completed);
+      const arr = [...completed];
+      const direction = sortDir === 'asc' ? 1 : -1;
+      return arr.sort((a, b) => {
+        switch (sortField) {
+          case 'deadline': return (new Date(a.deadline) - new Date(b.deadline)) * direction;
+          case 'price': return (a.price - b.price) * direction;
+          case 'complexity': {
+            const w = { 'Низкая':0, 'Средняя':1, 'Высокая':2 };
+            return (w[a.complexity] - w[b.complexity]) * direction;
+          }
+          case 'title': return a.title.localeCompare(b.title) * direction;
+          default: return 0;
+        }
+      });
+    }
+
+    // РЕНДЕРИНГ КАРТОЧЕК
+    function renderTodo() {
+      const todo = orders.filter(o => !o.completed);
+      todoEl.innerHTML = todo.map(o => {
+        const complClass = o.complexity === 'Низкая' ? 'low' : (o.complexity === 'Средняя' ? 'medium' : 'high');
+        return `<div class="order-card" data-id="${o.id}">
+          <div class="card-header">
+            <span class="card-title">${o.title}</span>
+            <span class="card-badge">${o.id}</span>
+          </div>
+          <div class="card-details">
+            <span class="chip"><i class="fas fa-envelope"></i> ${o.client}</span>
+            <span class="chip"><i class="fas fa-hourglass-half"></i> ${formatDate(o.deadline)}</span>
+            <span class="chip complexity ${complClass}">${o.complexity}</span>
+            <span class="chip price">${formatPrice(o.price)}</span>
+            <span class="chip commission"><i class="fas fa-percent"></i> ${o.commission}%</span>
+          </div>
+          <div class="card-footer">
+            <button class="btn-complete" data-id="${o.id}"><i class="fas fa-check-circle"></i> Отметить выполненным</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function renderCompleted() {
+      const sorted = getSortedCompleted();
+      completedEl.innerHTML = sorted.map(o => {
+        const complClass = o.complexity === 'Низкая' ? 'low' : (o.complexity === 'Средняя' ? 'medium' : 'high');
+        return `<div class="order-card" data-id="${o.id}">
+          <div class="card-header">
+            <span class="card-title">${o.title}</span>
+            <span class="card-badge">${o.id}</span>
+          </div>
+          <div class="card-details">
+            <span class="chip"><i class="fas fa-envelope"></i> ${o.client}</span>
+            <span class="chip"><i class="fas fa-hourglass-half"></i> ${formatDate(o.deadline)}</span>
+            <span class="chip complexity ${complClass}">${o.complexity}</span>
+            <span class="chip price">${formatPrice(o.price)}</span>
+            <span class="chip commission"><i class="fas fa-percent"></i> ${o.commission}%</span>
+          </div>
+          <div class="card-footer">
+            <span class="completed-label"><i class="fas fa-check-double"></i> Выполнено</span>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function renderAll() {
+      renderTodo();
+      renderCompleted();
+      updateStats();
+    }
+
+    // ----- LOCALSTORAGE -----
+    function saveToStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+    }
+
+    function loadFromStorage() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try { orders = JSON.parse(stored); } catch { orders = []; }
+      }
+      if (!orders.length) {
+        orders = [
+          { id: generateId(), title: 'Разработка лендинга', client: 'client1@mail.com', deadline: '2026-03-15', complexity: 'Средняя', price: 50000, commission: 80, completed: false },
+          { id: generateId(), title: 'Вёрстка интернет-магазина', client: '@telegram_nick', deadline: '2026-04-01', complexity: 'Высокая', price: 120000, commission: 75, completed: false },
+          { id: generateId(), title: 'Рефакторинг кода', client: 'ivan@example.com', deadline: '2026-02-10', complexity: 'Низкая', price: 20000, commission: 90, completed: true }
+        ];
+      }
+    }
+
+    // ----- ОБРАБОТКА ОТМЕТКИ ВЫПОЛНЕНИЯ -----
+    document.addEventListener('click', e => {
+      if (e.target.closest('.btn-complete')) {
+        const id = e.target.closest('.btn-complete').dataset.id;
+        const order = orders.find(o => o.id === id);
+        if (order) {
+          order.completed = true;
+          saveToStorage();
+          renderAll();
+          if (modal.style.display === 'flex') renderAdminTable(); // обновить админку
+          showToast('Заказ отмечен выполненным');
+        }
+      }
+    });
+
+    // ----- СОРТИРОВКА -----
+    sortButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const field = btn.dataset.sort;
+        if (sortField === field) {
+          sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortField = field;
+          sortDir = 'desc'; // при смене поля новые сверху
+        }
+        sortButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCompleted();
+      });
+    });
+    // активная по умолчанию
+    document.querySelector('[data-sort="deadline"]')?.classList.add('active');
+
+    // ----- АДМИН-ПАНЕЛЬ (МОДАЛКА) -----
+    function openModal() {
+      modal.style.display = 'flex';
+      showForm = false;
+      renderAdminTable();
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    // отображение таблицы всех заказов
+    function renderAdminTable() {
+      showForm = false;
+      let html = `<div class="table-wrapper"><table class="admin-table">
+        <thead><tr><th>ID</th><th>Название</th><th>Клиент</th><th>Дедлайн</th><th>Сложность</th><th>Цена</th><th>%</th><th>Статус</th><th>Действия</th></tr></thead><tbody>`;
+      orders.forEach(o => {
+        html += `<tr>
+          <td><code>${o.id}</code></td>
+          <td>${o.title}</td>
+          <td>${o.client}</td>
+          <td>${formatDate(o.deadline)}</td>
+          <td><span class="complexity ${o.complexity === 'Низкая' ? 'low' : (o.complexity === 'Средняя' ? 'medium' : 'high')}">${o.complexity}</span></td>
+          <td>${formatPrice(o.price)}</td>
+          <td>${o.commission}%</td>
+          <td><input type="checkbox" class="status-checkbox" data-id="${o.id}" ${o.completed ? 'checked' : ''}></td>
+          <td class="action-cell">
+            <button class="action-icon edit-btn" data-id="${o.id}"><i class="fas fa-edit"></i></button>
+            <button class="action-icon delete-btn" data-id="${o.id}"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>`;
+      });
+      html += '</tbody></table></div>';
+      adminContent.innerHTML = html;
+
+      // чекбоксы статуса
+      document.querySelectorAll('.status-checkbox').forEach(cb => {
+        cb.addEventListener('change', e => {
+          const id = e.target.dataset.id;
+          const order = orders.find(o => o.id === id);
+          if (order) {
+            order.completed = e.target.checked;
+            saveToStorage();
+            renderAll();
+          }
+        });
+      });
+
+      // редактирование
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          adminEditId = id;
+          showForm = true;
+          renderAdminForm(id);
+        });
+      });
+
+      // удаление
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          if (confirm('Удалить заказ?')) {
+            orders = orders.filter(o => o.id !== id);
+            saveToStorage();
+            renderAll();
+            renderAdminTable();
+            showToast('Заказ удалён');
+          }
+        });
+      });
+    }
+
+    // форма добавления/редактирования
+    function renderAdminForm(id = null) {
+      const order = id ? orders.find(o => o.id === id) : null;
+      adminContent.innerHTML = `
+        <form id="orderForm" class="admin-form">
+          <div class="form-group"><label>Название</label><input type="text" id="title" value="${order ? order.title : ''}" required></div>
+          <div class="form-group"><label>Связь</label><input type="text" id="client" value="${order ? order.client : ''}" required></div>
+          <div class="form-group"><label>Дедлайн</label><input type="date" id="deadline" value="${order ? order.deadline : ''}" required></div>
+          <div class="form-group"><label>Сложность</label>
+            <select id="complexity">
+              <option value="Низкая" ${order && order.complexity==='Низкая' ? 'selected' : ''}>Низкая</option>
+              <option value="Средняя" ${order && order.complexity==='Средняя' ? 'selected' : ''}>Средняя</option>
+              <option value="Высокая" ${order && order.complexity==='Высокая' ? 'selected' : ''}>Высокая</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Цена (₽)</label><input type="number" id="price" min="0" value="${order ? order.price : ''}" required></div>
+          <div class="form-group"><label>Процент (0-100)</label><input type="number" id="commission" min="0" max="100" value="${order ? order.commission : 80}" required></div>
+          <div class="form-group form-checkbox"><label>Выполнен?</label><input type="checkbox" id="completed" ${order && order.completed ? 'checked' : ''} style="width:24px;height:24px;"></div>
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" id="cancelForm">Отмена</button>
+            <button type="submit" class="btn-save"><i class="fas fa-save"></i> Сохранить</button>
+          </div>
+        </form>
+      `;
+      document.getElementById('cancelForm').addEventListener('click', () => {
+        renderAdminTable();
+      });
+      document.getElementById('orderForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newOrder = {
+          id: id || generateId(),
+          title: document.getElementById('title').value.trim(),
+          client: document.getElementById('client').value.trim(),
+          deadline: document.getElementById('deadline').value,
+          complexity: document.getElementById('complexity').value,
+          price: parseFloat(document.getElementById('price').value),
+          commission: parseFloat(document.getElementById('commission').value),
+          completed: document.getElementById('completed').checked
+        };
+        if (!newOrder.title || !newOrder.client || !newOrder.deadline || newOrder.price <= 0 || newOrder.commission < 0 || newOrder.commission > 100) {
+          alert('Заполните все поля корректно');
+          return;
+        }
+        if (id) {
+          const idx = orders.findIndex(o => o.id === id);
+          if (idx !== -1) orders[idx] = newOrder;
+        } else {
+          orders.push(newOrder);
+        }
+        saveToStorage();
+        renderAll();
+        renderAdminTable();
+        showToast(id ? 'Заказ обновлён' : 'Заказ добавлен');
+      });
+    }
+
+    // ----- ЭКСПОРТ / ИМПОРТ -----
+    function exportJSON() {
+      const dataStr = JSON.stringify(orders, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `freelance_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('JSON экспортирован');
+    }
+
+    function exportCSV() {
+      if (!orders.length) { alert('Нет данных'); return; }
+      const headers = ['ID','Название','Клиент','Дедлайн','Сложность','Цена','Процент','Статус'];
+      const rows = orders.map(o => [
+        o.id, o.title, o.client, o.deadline, o.complexity, o.price, o.commission, o.completed ? 'Выполнен' : 'Текущий'
+      ]);
+      const csvContent = [headers.join(','), ...rows.map(r => r.map(c => `"${c}"`).join(','))].join('\n');
+      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' }); // BOM для русских букв
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `orders_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('CSV экспортирован');
+    }
+
+    function importJSON(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!Array.isArray(imported)) throw new Error('Не массив');
+          if (confirm('Загруженные данные заменят текущие. Продолжить?')) {
+            orders = imported;
+            saveToStorage();
+            renderAll();
+            renderAdminTable();
+            showToast('Импорт выполнен');
+          }
+        } catch (err) {
+          alert('Ошибка парсинга JSON');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // сброс к демо
+    function resetToDemo() {
+      if (confirm('Вернуть демонстрационные данные? Все несохранённые изменения будут потеряны.')) {
+        orders = [
+          { id: generateId(), title: 'Разработка лендинга', client: 'client1@mail.com', deadline: '2026-03-15', complexity: 'Средняя', price: 50000, commission: 80, completed: false },
+          { id: generateId(), title: 'Вёрстка интернет-магазина', client: '@telegram_nick', deadline: '2026-04-01', complexity: 'Высокая', price: 120000, commission: 75, completed: false },
+          { id: generateId(), title: 'Рефакторинг кода', client: 'ivan@example.com', deadline: '2026-02-10', complexity: 'Низкая', price: 20000, commission: 90, completed: true }
+        ];
+        saveToStorage();
+        renderAll();
+        renderAdminTable();
+        showToast('Демо-данные загружены');
+      }
+    }
+
+    // ----- ИНИЦИАЛИЗАЦИЯ -----
+    loadFromStorage();
+    renderAll();
+
+    // админка: запрос пароля
+    adminGear.addEventListener('click', () => {
+      const pwd = prompt('Введите пароль:');
+      if (pwd === ADMIN_PASSWORD) {
+        openModal();
+      } else {
+        alert('Неверный пароль');
+      }
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    // обработчики кнопок админки (после открытия модалки они динамические, используем делегирование через adminContent)
+    adminContent.addEventListener('click', e => {
+      if (e.target.closest('#addOrderBtn')) {
+        adminEditId = null;
+        showForm = true;
+        renderAdminForm();
+      } else if (e.target.closest('#exportJsonBtn')) {
+        exportJSON();
+      } else if (e.target.closest('#exportCsvBtn')) {
+        exportCSV();
+      } else if (e.target.closest('#importJsonBtn')) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json,application/json';
+        input.onchange = (ev) => {
+          if (ev.target.files[0]) importJSON(ev.target.files[0]);
+        };
+        input.click();
+      } else if (e.target.closest('#resetDemoBtn')) {
+        resetToDemo();
+      }
+    });
+
+    // но сами кнопки в тулбаре статичны, поэтому навесим обработчики отдельно
+    document.getElementById('addOrderBtn').addEventListener('click', () => {
+      adminEditId = null;
+      showForm = true;
+      renderAdminForm();
+    });
+    document.getElementById('exportJsonBtn').addEventListener('click', exportJSON);
+    document.getElementById('exportCsvBtn').addEventListener('click', exportCSV);
+    document.getElementById('importJsonBtn').addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json,application/json';
+      input.onchange = (ev) => {
+        if (ev.target.files[0]) importJSON(ev.target.files[0]);
+      };
+      input.click();
+    });
+    document.getElementById('resetDemoBtn').addEventListener('click', resetToDemo);
+  })();
+</script>
+</body>
+</html>
