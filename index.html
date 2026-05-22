@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Никита Разживин · Freelance Flow</title>
+  <title>Никита Разживин · Freelance Flow — доход с комиссией</title>
   <!-- Google Fonts Inter + Fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -298,6 +298,14 @@
       padding: 4px 12px;
       border-radius: 30px;
       font-size: 0.85rem;
+    }
+    
+    /* новая стилизация для суммы с учётом процентов (итоговый доход) */
+    .net-earned {
+      background: #cfe3d9;
+      color: #2c5a48;
+      font-weight: 800;
+      border-left: 3px solid #598b76;
     }
 
     .card-footer {
@@ -806,7 +814,7 @@
     <section class="column">
       <div class="column-header">
         <h2><i class="fas fa-tasks" style="margin-right: 10px;"></i>Текущие</h2>
-        <div class="sort-icons"></div> <!-- пусто для симметрии -->
+        <div class="sort-icons"></div>
       </div>
       <div id="todoList" class="card-list"></div>
     </section>
@@ -854,20 +862,17 @@
 
 <script>
   (function() {
-    // ----- КОНСТАНТЫ И СОСТОЯНИЕ -----
-    const STORAGE_KEY = 'freelance_dashboard_v3'; // новый ключ, чтобы избежать конфликтов
+    const STORAGE_KEY = 'freelance_dashboard_v3';
     const ADMIN_PASSWORD = '123';
-    const ID_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ123456789'; // без 0, O, I
+    const ID_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ123456789';
 
     let orders = [];
     let sortField = 'deadline';
-    let sortDir = 'desc'; // новые сверху
+    let sortDir = 'desc';
 
-    // для админки
     let adminEditId = null;
     let showForm = false;
 
-    // DOM
     const todoEl = document.getElementById('todoList');
     const completedEl = document.getElementById('completedList');
     const completedCountSpan = document.getElementById('completedCount');
@@ -879,7 +884,6 @@
     const adminContent = document.getElementById('adminContent');
     const toastEl = document.getElementById('toast');
 
-    // ----- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ -----
     function generateId() {
       let id = '';
       for (let i = 0; i < 7; i++) {
@@ -899,22 +903,25 @@
       return new Intl.NumberFormat('ru-RU').format(p) + ' ₽';
     }
 
+    // сумма, которую получает фрилансер с учётом процента (commission - это доля исполнителя)
+    function getNetAmount(order) {
+      return Math.round(order.price * order.commission / 100);
+    }
+
     function showToast(text, duration = 2500) {
       toastEl.textContent = text;
       toastEl.classList.add('show');
       setTimeout(() => toastEl.classList.remove('show'), duration);
     }
 
-    // обновление статистики
     function updateStats() {
       const completed = orders.filter(o => o.completed);
       const count = completed.length;
-      const total = completed.reduce((acc, o) => acc + (o.price * o.commission / 100), 0);
+      const total = completed.reduce((acc, o) => acc + getNetAmount(o), 0);
       completedCountSpan.textContent = count;
-      totalEarnedSpan.textContent = formatPrice(Math.round(total));
+      totalEarnedSpan.textContent = formatPrice(total);
     }
 
-    // сортировка выполненных
     function getSortedCompleted() {
       const completed = orders.filter(o => o.completed);
       const arr = [...completed];
@@ -933,22 +940,21 @@
       });
     }
 
-    // РЕНДЕРИНГ КАРТОЧЕК
     function renderTodo() {
       const todo = orders.filter(o => !o.completed);
       todoEl.innerHTML = todo.map(o => {
         const complClass = o.complexity === 'Низкая' ? 'low' : (o.complexity === 'Средняя' ? 'medium' : 'high');
         return `<div class="order-card" data-id="${o.id}">
           <div class="card-header">
-            <span class="card-title">${o.title}</span>
+            <span class="card-title">${escapeHtml(o.title)}</span>
             <span class="card-badge">${o.id}</span>
           </div>
           <div class="card-details">
-            <span class="chip"><i class="fas fa-envelope"></i> ${o.client}</span>
+            <span class="chip"><i class="fas fa-envelope"></i> ${escapeHtml(o.client)}</span>
             <span class="chip"><i class="fas fa-hourglass-half"></i> ${formatDate(o.deadline)}</span>
             <span class="chip complexity ${complClass}">${o.complexity}</span>
-            <span class="chip price">${formatPrice(o.price)}</span>
-            <span class="chip commission"><i class="fas fa-percent"></i> ${o.commission}%</span>
+            <span class="chip price"><i class="fas fa-tag"></i> ${formatPrice(o.price)}</span>
+            <span class="chip commission"><i class="fas fa-percent"></i> ${o.commission}% (ваша доля)</span>
           </div>
           <div class="card-footer">
             <button class="btn-complete" data-id="${o.id}"><i class="fas fa-check-circle"></i> Отметить выполненным</button>
@@ -961,23 +967,35 @@
       const sorted = getSortedCompleted();
       completedEl.innerHTML = sorted.map(o => {
         const complClass = o.complexity === 'Низкая' ? 'low' : (o.complexity === 'Средняя' ? 'medium' : 'high');
+        const netAmount = getNetAmount(o);
         return `<div class="order-card" data-id="${o.id}">
           <div class="card-header">
-            <span class="card-title">${o.title}</span>
+            <span class="card-title">${escapeHtml(o.title)}</span>
             <span class="card-badge">${o.id}</span>
           </div>
           <div class="card-details">
-            <span class="chip"><i class="fas fa-envelope"></i> ${o.client}</span>
+            <span class="chip"><i class="fas fa-envelope"></i> ${escapeHtml(o.client)}</span>
             <span class="chip"><i class="fas fa-hourglass-half"></i> ${formatDate(o.deadline)}</span>
             <span class="chip complexity ${complClass}">${o.complexity}</span>
-            <span class="chip price">${formatPrice(o.price)}</span>
-            <span class="chip commission"><i class="fas fa-percent"></i> ${o.commission}%</span>
+            <span class="chip net-earned"><i class="fas fa-hand-holding-usd"></i> <strong>Вы получили: ${formatPrice(netAmount)}</strong></span>
+            <span class="chip commission"><i class="fas fa-percent"></i> ${o.commission}% (от ${formatPrice(o.price)})</span>
           </div>
           <div class="card-footer">
-            <span class="completed-label"><i class="fas fa-check-double"></i> Выполнено</span>
+            <span class="completed-label"><i class="fas fa-check-double"></i> Выполнено • доход ${formatPrice(netAmount)}</span>
           </div>
         </div>`;
       }).join('');
+    }
+
+    // простейший esc для защиты от XSS
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
     }
 
     function renderAll() {
@@ -986,7 +1004,6 @@
       updateStats();
     }
 
-    // ----- LOCALSTORAGE (с проверкой на целостность) -----
     function saveToStorage() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
@@ -1001,7 +1018,6 @@
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
           const parsed = JSON.parse(stored);
-          // убедимся, что это массив и каждый объект имеет нужные поля (простая валидация)
           if (Array.isArray(parsed)) {
             orders = parsed;
           } else {
@@ -1015,18 +1031,16 @@
         orders = [];
       }
 
-      // если orders пустой или не массив — грузим демо
       if (!orders.length) {
         orders = [
           { id: generateId(), title: 'Разработка лендинга', client: 'client1@mail.com', deadline: '2026-03-15', complexity: 'Средняя', price: 50000, commission: 80, completed: false },
           { id: generateId(), title: 'Вёрстка интернет-магазина', client: '@telegram_nick', deadline: '2026-04-01', complexity: 'Высокая', price: 120000, commission: 75, completed: false },
           { id: generateId(), title: 'Рефакторинг кода', client: 'ivan@example.com', deadline: '2026-02-10', complexity: 'Низкая', price: 20000, commission: 90, completed: true }
         ];
-        saveToStorage(); // сразу сохраняем демо в storage
+        saveToStorage();
       }
     }
 
-    // ----- ОБРАБОТКА ОТМЕТКИ ВЫПОЛНЕНИЯ -----
     document.addEventListener('click', e => {
       if (e.target.closest('.btn-complete')) {
         const id = e.target.closest('.btn-complete').dataset.id;
@@ -1035,13 +1049,12 @@
           order.completed = true;
           saveToStorage();
           renderAll();
-          if (modal.style.display === 'flex') renderAdminTable(); // обновить админку
-          showToast('Заказ отмечен выполненным');
+          if (modal.style.display === 'flex') renderAdminTable();
+          showToast(`✅ Заказ выполнен! Ваш доход: ${formatPrice(getNetAmount(order))}`);
         }
       }
     });
 
-    // ----- СОРТИРОВКА -----
     sortButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const field = btn.dataset.sort;
@@ -1049,17 +1062,15 @@
           sortDir = sortDir === 'asc' ? 'desc' : 'asc';
         } else {
           sortField = field;
-          sortDir = 'desc'; // новые сверху
+          sortDir = 'desc';
         }
         sortButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         renderCompleted();
       });
     });
-    // активная по умолчанию
     document.querySelector('[data-sort="deadline"]')?.classList.add('active');
 
-    // ----- АДМИН-ПАНЕЛЬ (МОДАЛКА) -----
     function openModal() {
       modal.style.display = 'flex';
       showForm = false;
@@ -1070,21 +1081,22 @@
       modal.style.display = 'none';
     }
 
-    // отображение таблицы всех заказов
     function renderAdminTable() {
       showForm = false;
       let html = `<div class="table-wrapper"><table class="admin-table">
-        <thead><tr><th>ID</th><th>Название</th><th>Клиент</th><th>Дедлайн</th><th>Сложность</th><th>Цена</th><th>%</th><th>Статус</th><th>Действия</th></tr></thead><tbody>`;
+        <thead><tr><th>ID</th><th>Название</th><th>Клиент</th><th>Дедлайн</th><th>Сложность</th><th>Цена</th><th>%</th><th>Ваш доход</th><th>Статус</th><th>Действия</th></tr></thead><tbody>`;
       orders.forEach(o => {
         const complClass = o.complexity === 'Низкая' ? 'low' : (o.complexity === 'Средняя' ? 'medium' : 'high');
+        const net = getNetAmount(o);
         html += `<tr>
           <td><code>${o.id}</code></td>
-          <td>${o.title}</td>
-          <td>${o.client}</td>
+          <td>${escapeHtml(o.title)}</td>
+          <td>${escapeHtml(o.client)}</td>
           <td>${formatDate(o.deadline)}</td>
           <td><span class="complexity ${complClass}">${o.complexity}</span></td>
           <td>${formatPrice(o.price)}</td>
           <td>${o.commission}%</td>
+          <td><strong>${formatPrice(net)}</strong></td>
           <td><input type="checkbox" class="status-checkbox" data-id="${o.id}" ${o.completed ? 'checked' : ''}></td>
           <td class="action-cell">
             <button class="action-icon edit-btn" data-id="${o.id}"><i class="fas fa-edit"></i></button>
@@ -1095,7 +1107,6 @@
       html += '</tbody></table></div>';
       adminContent.innerHTML = html;
 
-      // чекбоксы статуса
       document.querySelectorAll('.status-checkbox').forEach(cb => {
         cb.addEventListener('change', e => {
           const id = e.target.dataset.id;
@@ -1109,7 +1120,6 @@
         });
       });
 
-      // редактирование
       document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const id = btn.dataset.id;
@@ -1119,7 +1129,6 @@
         });
       });
 
-      // удаление
       document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const id = btn.dataset.id;
@@ -1134,13 +1143,12 @@
       });
     }
 
-    // форма добавления/редактирования
     function renderAdminForm(id = null) {
       const order = id ? orders.find(o => o.id === id) : null;
       adminContent.innerHTML = `
         <form id="orderForm" class="admin-form">
-          <div class="form-group"><label>Название</label><input type="text" id="title" value="${order ? order.title : ''}" required></div>
-          <div class="form-group"><label>Связь</label><input type="text" id="client" value="${order ? order.client : ''}" required></div>
+          <div class="form-group"><label>Название</label><input type="text" id="title" value="${order ? escapeHtml(order.title) : ''}" required></div>
+          <div class="form-group"><label>Связь</label><input type="text" id="client" value="${order ? escapeHtml(order.client) : ''}" required></div>
           <div class="form-group"><label>Дедлайн</label><input type="date" id="deadline" value="${order ? order.deadline : ''}" required></div>
           <div class="form-group"><label>Сложность</label>
             <select id="complexity">
@@ -1150,7 +1158,7 @@
             </select>
           </div>
           <div class="form-group"><label>Цена (₽)</label><input type="number" id="price" min="0" value="${order ? order.price : ''}" required></div>
-          <div class="form-group"><label>Процент (0-100)</label><input type="number" id="commission" min="0" max="100" value="${order ? order.commission : 80}" required></div>
+          <div class="form-group"><label>Ваш процент (%)</label><input type="number" id="commission" min="0" max="100" value="${order ? order.commission : 80}" required></div>
           <div class="form-group form-checkbox"><label>Выполнен?</label><input type="checkbox" id="completed" ${order && order.completed ? 'checked' : ''} style="width:24px;height:24px;"></div>
           <div class="form-actions">
             <button type="button" class="btn-cancel" id="cancelForm">Отмена</button>
@@ -1190,7 +1198,6 @@
       });
     }
 
-    // ----- ЭКСПОРТ / ИМПОРТ -----
     function exportJSON() {
       const dataStr = JSON.stringify(orders, null, 2);
       const blob = new Blob([dataStr], { type: 'application/json' });
@@ -1205,9 +1212,9 @@
 
     function exportCSV() {
       if (!orders.length) { alert('Нет данных'); return; }
-      const headers = ['ID','Название','Клиент','Дедлайн','Сложность','Цена','Процент','Статус'];
+      const headers = ['ID','Название','Клиент','Дедлайн','Сложность','Цена','Процент','Доход(руб)','Статус'];
       const rows = orders.map(o => [
-        o.id, o.title, o.client, o.deadline, o.complexity, o.price, o.commission, o.completed ? 'Выполнен' : 'Текущий'
+        o.id, o.title, o.client, o.deadline, o.complexity, o.price, o.commission, getNetAmount(o), o.completed ? 'Выполнен' : 'Текущий'
       ]);
       const csvContent = [headers.join(','), ...rows.map(r => r.map(c => `"${c}"`).join(','))].join('\n');
       const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1254,11 +1261,9 @@
       }
     }
 
-    // ----- ИНИЦИАЛИЗАЦИЯ -----
-    loadFromStorage();  // загружает и сохраняет демо при необходимости
+    loadFromStorage();
     renderAll();
 
-    // админка: запрос пароля
     adminGear.addEventListener('click', () => {
       const pwd = prompt('Введите пароль:');
       if (pwd === ADMIN_PASSWORD) {
@@ -1271,7 +1276,6 @@
     closeModalBtn.addEventListener('click', closeModal);
     window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
-    // обработчики кнопок админки (статические)
     document.getElementById('addOrderBtn').addEventListener('click', () => {
       adminEditId = null;
       showForm = true;
